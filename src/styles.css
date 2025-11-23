@@ -1,1 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files  */
+@import "animate.css/animate.min.css";
+ @tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+
+:root{
+    --mainColor:#065E21;
+    --titelFonts: "cursive",;
+    --secondlyFont:"Pacifico",cursive;
+  
+
+}
+
+
+.mainColor{
+    background-color: var(--mainColor);
+}
+
+.text-color{
+ color: var(--mainColor);
+}
+.pacifico-regular {
+    font-family: var(--titelFonts);
+
+}  
+
+.secondlyFont{
+    font-family: var(--secondlyFont);
+}

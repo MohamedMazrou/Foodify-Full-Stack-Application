@@ -1,0 +1,49 @@
+.moving-box {
+    position: absolute;
+    top: 50%;
+    font-size: 40px;
+    animation: moveAcross 4s linear ;
+    width: 300px;
+    height: 300px;
+}
+
+@keyframes moveAcross {
+    0% {
+        left: -100px;
+    }
+
+    100% {
+        left: 80%;
+    }
+   
+}
+@keyframes moveAcrossMobile {
+    0% {
+            left: -100px;
+        }
+    
+        100% {
+            left: 70%;
+        }
+}
+
+@media (max-width:767px) {
+
+    .moving-box {
+            width: 150px;
+            height: 150px;
+            animation: moveAcrossMobile 4s linear 1;
+        }
+
+}
+
+
+@media ((min-width:768px) and (max-width:1024px)) {
+    .moving-box{
+        width: 200px;
+            height: 200px;
+          top: 60%;
+    }
+
+
+}
