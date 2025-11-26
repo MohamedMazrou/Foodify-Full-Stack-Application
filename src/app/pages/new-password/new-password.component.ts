@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModuleModule } from '../../shared/shared-module.module';
 import { NewPassService } from './new-pass.service';
 import { InewPass } from '../../core/interfaces/Interfaces';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-new-password',
@@ -16,8 +17,13 @@ import { Router } from '@angular/router';
 export class NewPasswordComponent {
 
   objNewPassword = {}
+  
+
   constructor( private toastr: ToastrService, private fb: FormBuilder,private _newPassword:NewPassService,private _router:Router){
+     const platformId = inject(PLATFORM_ID);
+      if (isPlatformBrowser(platformId)) {
      this.objNewPassword = history.state?.obj_Otp
+      }
   }
 
 

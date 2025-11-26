@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IOtp } from '../../core/interfaces/Interfaces';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OtpService } from './otp.service';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModuleModule } from '../../shared/shared-module.module';
+import { isPlatformBrowser } from '@angular/common';
 // import { NgClass, NgIf } from "../../../../node_modules/@angular/common/index";
 
 @Component({
@@ -16,8 +17,11 @@ import { SharedModuleModule } from '../../shared/shared-module.module';
 })
 export class OtpComponent {
   phone: string | undefined;
-  constructor(private fb: FormBuilder,private _Otp :OtpService,private toastr: ToastrService){
+  constructor(private fb: FormBuilder,private _Otp :OtpService,private toastr: ToastrService,private router : Router){
+      const platformId = inject(PLATFORM_ID);
+       if (isPlatformBrowser(platformId)) {
  this.phone = history.state?.phone;
+       }
   }
 countdown: number = 60;
 intervalId: any;
@@ -84,7 +88,11 @@ startCountdown() {
     }
 
     this._Otp.Otp(obj_Otp).subscribe({
-      next:((res:any)=>{this.toastr.success(res.message);}),
+      next:((res:any)=>{
+        this.toastr.success(res.message);
+        this.router.navigate(['/signin'])
+
+      }),
       error:((err:any)=>{   this.toastr.error(err.error.message)})
     })
 }
@@ -101,7 +109,10 @@ ResendOtp(otp:FormGroup):void{
     }
 
     this._Otp.ResendOtp(obj_Otp).subscribe({
-      next:((res:any)=>{this.toastr.success(res.message);}),
+      next:((res:any)=>{
+        this.toastr.success(res.message);
+       this.router.navigate(['/signin'])
+      }),
       error:((err:any)=>{   this.toastr.error(err.error.message)})
     })
 

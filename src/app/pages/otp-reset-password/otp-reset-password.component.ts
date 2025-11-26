@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 import { IOtp } from '../../core/interfaces/Interfaces';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-otp-reset-password',
@@ -15,8 +16,10 @@ export class OtpResetPasswordComponent {
     phone: string | undefined;
 
 constructor(private fb: FormBuilder,private toastr: ToastrService,private _router : Router){
+        const platformId = inject(PLATFORM_ID);
+  if (isPlatformBrowser(platformId)) {
    this.phone = history.state?.phone;
-
+  }
 }
 
 
