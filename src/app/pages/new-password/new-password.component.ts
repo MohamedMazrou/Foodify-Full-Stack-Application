@@ -59,6 +59,17 @@ export class NewPasswordComponent {
   newPass(Newpass:FormGroup):void{
     if(Newpass.valid){
        console.log(this.Newpass.value)
+    const platformId = inject(PLATFORM_ID);
+
+
+    let phone: string | undefined = '';
+let otp: string | undefined = '';
+
+
+if (isPlatformBrowser(platformId)) {
+  phone = history.state?.phone;
+  otp = history.state?.otp;
+}
     
    const  objNewpassword : InewPass = {
     phone:history.state?.phone,
