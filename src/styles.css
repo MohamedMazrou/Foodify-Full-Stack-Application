@@ -40,8 +40,3 @@
 .secondlyFont{
     font-family: var(--secondlyFont);
 }
-
-body{
-    padding-top: 80px;
-    /* background-color: var(--mainColor); */
-}

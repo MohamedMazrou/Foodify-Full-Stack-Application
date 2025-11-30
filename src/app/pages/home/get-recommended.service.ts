@@ -5,7 +5,7 @@ import { url } from '../../core/environment/baseUrl';
 import { Irecommended } from '../../core/interfaces/Interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class GetRecommendedService {
 
