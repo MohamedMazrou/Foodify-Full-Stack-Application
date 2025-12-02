@@ -142,7 +142,7 @@
                             <h3>
                               <a href="#">{{itemCart.name}}</a>
                             </h3>
-                            <p class="ml-4">{{itemCart.subtotal}}</p>
+                            <p class="ml-4">{{itemCart.subtotal | number:'1.0-0'}} EGP</p>
                           </div>
                           <p class="mt-1 text-sm text-gray-500">calories:  {{itemCart.kcal}}  Kcal</p>
                           <p class="mt-1 text-sm text-gray-500">price: {{itemCart.price | number:'1.0-0'}} EGP</p>
@@ -189,7 +189,7 @@
                </div>
 
 <!-- checkout -->
-               <div class="border-t  absolute bottom-44 bg-white w-full border-gray-200 pr-4 py-6 ">
+               <div class="border-t  absolute bottom-11 md:bottom-44 bg-white w-full border-gray-200 pr-4 py-6 ">
              
               <div class="flex justify-between text-base font-medium text-gray-900">
                 <p>items</p>
