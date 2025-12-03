@@ -15,6 +15,19 @@ export interface IsignIn {
 
 }
 
+export interface profile {
+  id: number;
+  name: string;
+  full_name: string;
+  phone: string;
+  email: string;
+  email_verified_at: string | null;
+  created_at: string;
+  updated_at: string;
+  birthday: string | null;
+  address: string | null;
+}
+
 export interface InewPass {
 
   otp:number,
