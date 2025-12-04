@@ -8,16 +8,18 @@ import { ToastrService } from 'ngx-toastr';
 import { FavService } from '../fav/fav.service';
 import { isPlatformBrowser } from '@angular/common';
 import { CartService } from '../../components/navbar/cart.service';
+import { RouterLink } from "@angular/router";
+import { ShowDetailsDishesService } from '../../shared/show-details-dishes.service';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent,SharedModuleModule],
+  imports: [NavbarComponent, FooterComponent, SharedModuleModule, RouterLink],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css'
 })
 export class CategoryComponent {
-  constructor(private _CategoryServices:GategoryService,private toastr: ToastrService,public _favSrevices:FavService,private _Cartservices:CartService){}
+  constructor(private _CategoryServices:GategoryService,private toastr: ToastrService,public _favSrevices:FavService,private _Cartservices:CartService,public _ShowDetailsDishesService:ShowDetailsDishesService){}
 ArrCate = signal<IFoodCategory[]>([])
 ArrDishes = signal<Irecommended[]>([])
 valueCate:string = ''

@@ -1,0 +1,69 @@
+<section class="relative pt-44 flex flex-col justify-center items-center gap-4">
+    <h3 class="pacifico-regular text-yellow-400 animate__animated animate__bounceInRight text-5xl lg:text-8xl  font-extrabold text-center ">Details</h3>
+    <div class="absolute hidden md:block -bottom-6 md:-bottom-3 left-6 md:left-20 lg:left-40 xl:left-80 2xl:left-96  ">
+  <img
+    class="w-10 md:w-14 lg:w-24 animate__animated animate__bounceInLeft"
+    src="../../../assets/Images_home/share.png"
+    alt=""
+  />
+</div>
+
+    <!-- <img class="absolute bottom-6 md:-bottom-3 animate__animated animate__bounceInLeft left-6 md:left-20 lg:left-40 xl:left-80 2xl:left-96 w-10 md:w-14 lg:w-24" src="../../../assets/Images_home/share.png" alt=""> -->
+    <!-- <img class="absolute bottom-6 md:-bottom-3 animate__animated animate__bounceInRight transform -rotate-180 right-6 md:right-20 lg:right-40 xl:right-80 2xl:right-96 w-10 md:w-14 lg:w-24" src="../../../assets/Images_home/share.png" alt=""> -->
+<div class="absolute bottom-9 md:-bottom-3 rotate-45 left-6 md:right-20 lg:right-40 xl:right-80 2xl:right-96 md:-rotate-180">
+  <img class="w-10 md:w-14 lg:w-24 animate__animated animate__bounceInRight" src="../../../assets/Images_home/share.png" alt="">
+</div>
+
+
+
+</section>
+
+<section class="flex justify-center items-center pt-20 pb-14 p-2">
+<article
+  class="shadow p-3 rounded-2xl  w-full md:w-1/2  xl:w-1/4 flex flex-col items-center justify-center bg-white "
+>
+  <!-- Image -->
+  <div class="w-full flex justify-center items-center">
+    <img
+      class="w-1/2 transition hover:rotate-180 duration-500 lg:w-1/3"
+      [src]="dish().image"
+      alt="Meal Image"
+    />
+  </div>
+
+  <!-- Text Section -->
+  <div class="p-4 w-full">
+    <div class="text-start">
+      <h5  class="font-semibold mb-1 ">{{ dish().name }} </h5>
+
+      <p class="text-gray-500 text-sm mb-2"> {{ dish().description ||'This Pargraph Will Appear To Save The Card Design.. ' }}</p>
+      <p class=" font-semibold  mb-2"> {{ dish().category  }}</p>
+    </div>
+
+    <p class="font-bold mb-2 flex justify-between items-center">
+      <span>{{ dish().price }} EGP</span>
+
+      <span class="flex items-center gap-1">
+        <i style="color: #065e21;" class="fa-solid fa-fire"></i>
+        {{ dish().kcal }}Kcal {{ dish().protein }}
+      </span>
+    </p>
+
+    <!-- Bottom Row -->
+    <div class="flex items-center justify-between mt-3 w-full">
+
+      <!-- Stars -->
+      <div class="flex">
+     <img *ngFor="let stars of [].constructor(dish().rating || 0)"  src="../../../assets/Images_home/card/Vector (1).png" alt="">
+      </div>
+
+      <!-- Fav + Add -->
+      <span class="flex items-center gap-3">
+ <button><i [ngStyle]="{'color': dish().switchOnFav ? '#065E21' : '#b3b8c2'}"  class="fa-solid fa-heart fa-lg"></i></button>
+   <button  class="mainColor text-white pacifico-regular font-bold px-6 py-2 rounded-xl ">add</button>
+   
+      </span>
+    </div>
+  </div>
+</article>
+</section>

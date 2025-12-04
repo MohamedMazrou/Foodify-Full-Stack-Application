@@ -1,7 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { SharedModuleModule } from '../../shared/shared-module.module';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { ICartItem, ICartResponse, Irecommended, profile } from '../../core/interfaces/Interfaces';
 import { GetRecommendedService } from '../../pages/home/get-recommended.service';
 import { SearchByRecommendPipe } from '../../core/pipe/search-by-recommend.pipe';
@@ -18,7 +18,7 @@ import { ProfileService } from './profile.service';
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NavbarComponent {
-  constructor(private _GetRecommendedService:GetRecommendedService,public _Cartservices:CartService,private toastr: ToastrService,private _ProfileService:ProfileService){}
+  constructor( private fb: FormBuilder,private _GetRecommendedService:GetRecommendedService,public _Cartservices:CartService,private toastr: ToastrService,private _ProfileService:ProfileService){}
 switchOffsearch :boolean = false
 switchNotification :boolean = false
 switchNavbar :boolean = false
@@ -56,6 +56,10 @@ swithOnSearch():void{
   this.switchNotification = false
   this.switchNavbar = false
        this.switchProfile =false
+   this.showFormUpdateProfile = false
+
+  this.OpenDropDown = false
+
 
 
   this.searchValue = ''
@@ -72,6 +76,10 @@ swithOnNotification():void{
   this.switchNavbar = false
       this.switchCarts = false
            this.switchProfile =false
+              this.showFormUpdateProfile = false
+              this.OpenDropDown = false
+
+
 
   this.searchValue = ''
   this.showScroll()
@@ -84,6 +92,10 @@ switchOnNavbar():void{
     this.searchValue = ''
     this.switchCarts = false
      this.switchProfile =false
+        this.showFormUpdateProfile = false
+        this.OpenDropDown = false
+
+
 
 this.showScroll()
 
@@ -95,7 +107,8 @@ switchOnCart():void{
   this.switchOffsearch = false
   this.switchNotification = false
    this.switchProfile =false
-
+   this.showFormUpdateProfile = false
+this.OpenDropDown = false
     this.searchValue = ''
  
 this.showScroll()
@@ -105,11 +118,13 @@ this.showScroll()
 hiddenOvarlay():void{
    this.switchProfile =false
      this.switchCarts = false
+    this.showFormUpdateProfile = false
+    this.OpenDropDown = false
 this.showScroll()
 }
 
 showScroll():void{
-   if(this.switchCarts|| this.switchProfile){
+   if(this.switchCarts|| this.switchProfile || this.showFormUpdateProfile){
     window.document.body.style.overflow = 'hidden'
     }else{ window.document.body.style.overflow = 'auto'}
 }
@@ -175,7 +190,10 @@ GetProfile():void{
   birthday:res.birthday,
   address: res.address,
       })
-    })
+    }),
+  error:((err:any)=>{
+    this.toastr.error(err.error.message)
+  })
   })
 }
 
@@ -221,5 +239,87 @@ DeleteItem(itemCart:ICartItem):void{
     error:((err)=>(this.toastr.error(err.error.message)))
   })
 }
+
+
+// open drop down
+OpenDropDown:boolean = false
+
+fnOpenDropDown():void{
+  this.OpenDropDown =  !this.OpenDropDown
+  this.showScroll()
+}
+
+showFormUpdateProfile:boolean = false
+
+fnshowFormUpdateProfile():void{
+  this.showFormUpdateProfile =  !this.showFormUpdateProfile
+    this.switchProfile = false
+    this.showScroll()
+}
+
+
+dataProfile = this.fb.group({
+  full_name: [
+    '',
+    [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.pattern(/^[A-Za-zأ-يء\s]+$/),
+    ],
+  ],
+
+  email: [
+    '',
+    [
+      Validators.required,
+      Validators.email, 
+    ],
+  ],
+birthday: [
+  '2003-1-1',
+  // [
+  //   // Validators.required,
+  //   // Validators.pattern(/^\d{4}-\d{1,2}-\d{1,2}$/), 
+  // ],
+],
+
+  address: [
+    'tanta',
+    // [
+    //   Validators.required,
+    //   Validators.minLength(3), 
+      
+    // ],
+  ],
+
+
+
+});
+
+  fnDataProfile(dataProfile:FormGroup):void{
+
+  if(dataProfile.valid){
+     this._ProfileService.EditProfile(dataProfile.value).subscribe({
+   next:((res:any)=> {
+    this.fnshowFormUpdateProfile()
+    this.GetProfile()
+      this.toastr.success(res.message);
+     
+    
+    }),
+    error:((err)=>(this.toastr.error(err.error.message)))
+     })
+     
+    }
+   
+  
+  else{
+      dataProfile.markAllAsTouched()
+    }
+   
+
+}
+
+
 
 }

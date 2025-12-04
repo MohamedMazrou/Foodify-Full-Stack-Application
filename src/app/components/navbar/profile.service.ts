@@ -12,5 +12,8 @@ export class ProfileService {
  getProfile():Observable<profile>{
     return this.http.get<profile>(url.endPoint_profile)
   }
+ EditProfile(obj:profile):Observable<profile>{
+    return this.http.post<profile>(url.endPoint_UpdateProfile,(obj))
+  }
 
 }

@@ -8,19 +8,21 @@ import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../components/navbar/cart.service';
 import { FavService } from '../fav/fav.service';
 import { isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { ShowDetailsDishesService } from '../../shared/show-details-dishes.service';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [SharedModuleModule],
+  imports: [SharedModuleModule,RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class HomeComponent {
-constructor(private _GetRecommendedService:GetRecommendedService,private toastr: ToastrService,private _Cartservices:CartService,private _favSrevices:FavService,){
+constructor(private _GetRecommendedService:GetRecommendedService,private toastr: ToastrService,private _Cartservices:CartService,private _favSrevices:FavService,public _ShowDetailsDishesService:ShowDetailsDishesService){
 
 }
 

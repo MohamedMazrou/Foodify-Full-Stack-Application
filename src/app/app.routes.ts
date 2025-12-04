@@ -25,6 +25,7 @@ export const routes: Routes = [
             {path:'home',loadComponent:()=> import('../app/pages/home/home.component').then((c)=> c.HomeComponent),pathMatch:'full'},
             {path:'favourite',loadComponent:()=> import('../app/pages/fav/fav.component').then((c)=> c.FavComponent),pathMatch:'full'},
             {path:'categories',loadComponent:()=> import('../app/pages/category/category.component').then((c)=> c.CategoryComponent),pathMatch:'full'},
+            {path:'dishes/:id',loadComponent:()=> import('../app/pages/details-dishes/details-dishes.component').then((c)=> c.DetailsDishesComponent),pathMatch:'full'},
         ]
 
 

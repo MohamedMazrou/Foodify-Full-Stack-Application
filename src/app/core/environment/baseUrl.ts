@@ -12,6 +12,8 @@ export const url = {
     endPoint_PostFav:'/api/favorite/',
     endPoint_categories:'/api/categories?search=',
     endPoint_profile:'/api/me',
+    endPoint_UpdateProfile:'/api/profile',
+    endPoint_dishes:'/api/dishes/',
 
 
 } 
