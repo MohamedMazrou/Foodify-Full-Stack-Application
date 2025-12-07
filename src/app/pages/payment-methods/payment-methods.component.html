@@ -1,0 +1,147 @@
+<!-- Tailwind CSS version of the provided payment component
+     Keeps Angular bindings (formGroup, (ngSubmit), *ngFor, pipes, etc.)
+     Replace Bootstrap JS modal behaviour with your preferred solution (Alpine, Flowbite, or keep Bootstrap JS).
+-->
+<section class="max-w-4xl mx-auto mt-5 flex flex-col items-center py-3 meal-details">
+  <article class="w-full md:w-8/12 lg:w-6/12 py-3 pb-5">
+
+    <!-- Header -->
+    <div class="w-full flex items-center justify-between p-3 mb-2 md:mb-4">
+      <a class="text-black no-underline" routerLink="/home"><i class="fa-solid fa-chevron-left"></i></a>
+      <h1 class="text-lg font-semibold">Payment Methods</h1>
+    </div>
+
+    <!-- Credit & Debit Cards -->
+    <h6 class="font-semibold mb-2">Credit & Debit Cards</h6>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<div class="bg-white shadow-sm border-0 rounded-2xl mb-3">
+<div class="p-3">
+
+
+<!-- Cards list -->
+<div class="space-y-2">
+ <!-- use Angular *ngFor to iterate cards -->
+  @for (card of cards(); track $index) {
+ <div  class="flex items-center p-2 rounded-lg bg-gray-50">
+
+
+<ng-container [ngSwitch]="card.type">
+<i *ngSwitchCase="'paypal'" class="fa-brands fa-cc-paypal fa-2x"></i>
+<i *ngSwitchCase="'mastercard'" class="fa-brands fa-cc-mastercard fa-2x"></i>
+<i *ngSwitchCase="'visa'" class="fa-brands fa-cc-visa fa-2x"></i>
+<img *ngSwitchCase="'apple pay'" src="./assets/images/apple-pay.png" width="38" />
+<i *ngSwitchDefault class="fa-regular fa-credit-card fa-2x text-gray-400"></i>
+</ng-container>
+
+
+<div class="flex-1 pl-3 md:pl-4">
+<span class="font-semibold block text-sm">{{card.name}}</span>
+<span class="text-sm text-gray-500">{{ card.details }}</span>
+</div>
+
+
+<input
+type="radio"
+name="payment"
+formControlName="payment"
+[value]="card"
+class="ml-2 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+/>
+</div>
+} 
+</div>
+
+
+<!-- Add new card -->
+<a [routerLink]="['/user/add-card']" class="mt-3 inline-flex items-center justify-center w-full p-2 border cursor-pointer rounded-lg text-sm" routerLink="/payment/add-card">
+<i class="bi bi-plus-square mr-2"></i>
+Add New Card
+</a>
+
+
+</div>
+</div>
+
+
+<!-- More Payment Options -->
+<div class="text-gray-500">
+<h6 class="font-semibold text-center">More Payment Options</h6>
+<span class="block text-center text-sm mb-3">(Still Working on it...)</span>
+
+
+<div class="bg-white shadow-sm rounded-2xl mb-3">
+<div class="p-3 text-gray-500">
+
+
+<!-- Wallet -->
+<div class="flex items-center p-2 rounded-lg mb-2 bg-gray-50">
+<i class="bi bi-wallet2 text-xl mr-3 text-green-500"></i>
+<div class="flex-1">
+<span class="font-semibold text-sm">Wallet</span>
+</div>
+</div>
+
+
+<!-- Net Banking -->
+<div class="flex items-center p-2 rounded-lg mb-2 bg-gray-50">
+<i class="bi bi-bank text-xl mr-3"></i>
+<div class="flex-1">
+<span class="font-semibold text-sm">Net Banking</span>
+</div>
+</div>
+
+
+<!-- Cash on Delivery -->
+<div class="flex items-center p-2 rounded-lg bg-gray-50">
+<i class="bi bi-cash-stack text-xl mr-3 text-green-500"></i>
+<div class="flex-1">
+<span class="font-semibold text-sm">Cash on Delivery</span>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+<!-- Confirm Button -->
+<div class="my-4 bg-white">
+<button
+type="submit"
+class="w-full py-2 rounded-lg font-semibold mainColor text-white disabled:opacity-50"
+[class.invalid]="form.invalid"
+[disabled]="form.invalid"
+>
+Confirm
+</button>
+</div>
+
+
+</form>
+    <!-- Modal (keep markup; behaviour depends on your modal library) -->
+    <!-- <div id="confirmModal" class="hidden" aria-labelledby="confirmModalLabel" aria-hidden="true">
+      <div class="fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg w-11/12 md:w-1/2">
+          <div class="p-4 border-b">
+            <h5 id="confirmModalLabel" class="text-lg font-semibold">Payment Confirm</h5>
+            <button type="button" class="absolute top-3 right-3 text-gray-500">×</button>
+          </div>
+          <div class="p-4">
+            <p>-Almost there! Please review your order one last time before confirming:</p>
+            <ul class="list-disc list-inside mt-2">
+              <li><strong>Total Items:</strong>4</li>
+              <li><strong>Total Price:</strong> 55 EGP</li>
+            </ul>
+            <p class="mt-3">-Are you ready to complete your payment?</p>
+          </div>
+          <div class="p-4 space-y-2">
+            <button type="button" (click)="onConfirm()" class="w-full py-2 rounded-lg bg-green-600 text-white">Confirm</button>
+            <button type="button" class="w-full py-2 rounded-lg bg-gray-200">Close</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  </article>
+</section>

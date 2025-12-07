@@ -1,0 +1,177 @@
+<section class="bg-white py-8 antialiased mt-40 md:mt-20 md:py-16">
+  <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <div class="mx-auto flex justify-center items-center max-w-5xl">
+      
+   
+
+      <form [formGroup]="paymentDataUser" (ngSubmit)="getData(paymentDataUser)"
+        class="w-full rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:p-6 lg:max-w-xl relative lg:p-8"
+      >
+
+
+        <h2
+          class="text-xl font-semibold text-gray-900 text-start sm:text-2xl pb-7"
+        >
+          Payment
+        </h2>
+
+<div class="grid mb-2 grid-cols-2 gap-4">
+  <div class="col-span-2 sm:col-span-1 flex flex-col gap-1">
+    <label class="text-sm font-semibold text-gray-700">Card Type</label>
+
+    <select
+      formControlName="type"
+      name="cardType"
+      required
+      class="w-full rounded-xl border border-gray-300 bg-gray-50 px-2 outline-none py-2 text-gray-900
+    transition duration-200"
+    >
+      <option value="" disabled>Select Card</option>
+      <option value="visa">Visa</option>
+      <option value="mastercard">MasterCard</option>
+      <option value="paypal">PayPal</option>
+      <option value="apple pay">Apple Pay</option>
+    </select>
+  </div>
+</div>
+
+     
+          <!--  name -->
+          <div class="col-span-2 sm:col-span-1">
+            <label
+              for="full_name"
+              class="mb-2 block text-sm font-medium text-gray-90"
+            >
+              Full name (as displayed on card)*
+            </label>
+            <input
+            formControlName="name"
+              type="text"
+              id="full_name"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+              placeholder="Bonnie Green"
+         
+            />
+          </div>
+          <!-- Card number* -->
+          <div class="col-span-2 sm:col-span-1">
+            <label
+              for="card-number-input"
+              class="mb-2 block text-sm font-medium text-gray-900"
+            >
+              Card number*
+            </label>
+            <input
+            formControlName="details"
+              type="text"
+              id="card-number-input"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+              placeholder="xxxx-xxxx-xxxx-xxxx"
+            />
+          </div>
+          <!-- expire_date -->
+          <div>
+            <label
+              for="card-expiration-input"
+              class="mb-2 block text-sm font-medium text-gray-900"
+              >Card expiration*
+            </label>
+            <div class="relative">
+            
+              <input
+              formControlName="expire_date" 
+               
+                id="card-expiration-input"
+                type="date"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 ps-9 text-sm text-gray-900"
+                placeholder="12/23"
+              />
+            </div>
+          </div>
+          <!-- csv -->
+          <div>
+            <label
+              for="cvv-input"
+              class="mb-2 flex items-center gap-1 text-sm font-medium text-gray-900"
+            >
+              csv*
+              <button
+                data-tooltip-target="cvv-desc"
+                data-tooltip-trigger="hover"
+                class="text-gray-400 hover:text-gray-900"
+              >
+                <svg
+                  class="h-4 w-4"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm9.408-5.5a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2h-.01ZM10 10a1 1 0 1 0 0 2h1v3h-1a1 1 0 1 0 0 2h4a1 1 0 1 0 0-2h-1v-4a1 1 0 0 0-1-1h-2Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+              <div
+                id="cvv-desc"
+                role="tooltip"
+                class="tooltip invisible absolute z-10 inline-block rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
+              >
+                The last 3 digits on back of card
+                <div class="tooltip-arrow" data-popper-arrow></div>
+              </div>
+            </label>
+            <input
+           formControlName="csv"
+              class="block w-full mb-2 rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500  "
+              placeholder="•••"
+            />
+          </div>
+     
+      
+
+        <button [disabled]="paymentDataUser.invalid" [ngClass]="{'bg-slate-400 cursor-default':paymentDataUser.invalid,' mainColor  cursor-pointer':paymentDataUser.valid}"
+          type="submit"
+          class="flex w-full md:w-1/4 text-white items-center justify-center rounded-lg transition duration-300  px-5 py-2.5 text-sm font-medium  focus:outline-none"
+        >
+         save
+        </button>
+        <div class="mt-6 flex items-center justify-center gap-8">
+          <img
+            class="h-8 w-auto dark:hidden"
+            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal.svg"
+            alt=""
+          />
+          <img
+            class="hidden h-8 w-auto dark:flex"
+            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/paypal-dark.svg"
+            alt=""
+          />
+          <img
+            class="h-8 w-auto dark:hidden"
+            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg"
+            alt=""
+          />
+          <img
+            class="hidden h-8 w-auto dark:flex"
+            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa-dark.svg"
+            alt=""
+          />
+          <img
+            class="h-8 w-auto dark:hidden"
+            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard.svg"
+            alt=""
+          />
+          <img
+            class="hidden h-8 w-auto dark:flex"
+            src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/mastercard-dark.svg"
+            alt=""
+          />
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>

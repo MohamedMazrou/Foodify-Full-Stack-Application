@@ -59,8 +59,8 @@
 
       <!-- Fav + Add -->
       <span class="flex items-center gap-3">
- <button><i [ngStyle]="{'color': dish().switchOnFav ? '#065E21' : '#b3b8c2'}"  class="fa-solid fa-heart fa-lg"></i></button>
-   <button  class="mainColor text-white pacifico-regular font-bold px-6 py-2 rounded-xl ">add</button>
+ <button (click)="addFav(dish())"><i [ngStyle]="{'color': dish().switchOnFav ? '#065E21' : '#b3b8c2'}"  class="fa-solid fa-heart fa-lg"></i></button>
+   <button (click)="addTocart(dish())" class="mainColor text-white pacifico-regular font-bold px-6 py-2 rounded-xl ">add</button>
    
       </span>
     </div>

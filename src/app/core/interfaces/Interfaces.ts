@@ -127,3 +127,27 @@ export interface IFoodCategory {
   image: string;
   dishes_count: number;
 }
+
+
+
+
+
+export interface IPaymentResponse {
+  data: IPaymentData[];
+}
+
+
+
+export interface IPaymentData {
+  id: number;
+  user_id: number;
+  type: string;
+  name: string;
+  details: string;
+  csv: string;
+  expire_date: string;
+  is_default: boolean;
+  created_at: string;
+  updated_at: string;
+}
+

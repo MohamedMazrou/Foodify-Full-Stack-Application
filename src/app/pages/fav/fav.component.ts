@@ -6,11 +6,12 @@ import { ICartResponse, IFavFoodItem, IResponseFavFood } from '../../core/interf
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../components/navbar/cart.service';
 import { isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-fav',
   standalone: true,
-  imports: [NavbarComponent,SharedModuleModule],
+  imports: [NavbarComponent,SharedModuleModule,RouterLink],
   templateUrl: './fav.component.html',
   styleUrl: './fav.component.css',
     schemas:[CUSTOM_ELEMENTS_SCHEMA]

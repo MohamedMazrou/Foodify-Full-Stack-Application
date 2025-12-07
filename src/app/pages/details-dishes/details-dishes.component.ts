@@ -1,10 +1,13 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, PLATFORM_ID, signal } from '@angular/core';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { ShowDetailsDishesService } from '../../shared/show-details-dishes.service';
 import { ActivatedRoute } from '@angular/router';
-import { Irecommended } from '../../core/interfaces/Interfaces';
+import { ICartResponse, Irecommended } from '../../core/interfaces/Interfaces';
 import { ToastrService } from 'ngx-toastr';
 import { SharedModuleModule } from '../../shared/shared-module.module';
+import { CartService } from '../../components/navbar/cart.service';
+import { FavService } from '../fav/fav.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-details-dishes',
@@ -14,7 +17,7 @@ import { SharedModuleModule } from '../../shared/shared-module.module';
   styleUrl: './details-dishes.component.css'
 })
 export class DetailsDishesComponent {
-constructor(private _ShowDetailsDishesService:ShowDetailsDishesService,private _activatedRoute: ActivatedRoute,private toastr: ToastrService ){}
+constructor(private _favSrevices:FavService,private _ShowDetailsDishesService:ShowDetailsDishesService,private _activatedRoute: ActivatedRoute,private toastr: ToastrService ,private _Cartservices:CartService){}
  id!: string;
  dish = signal<Irecommended>({
     id: 0,
@@ -53,8 +56,9 @@ getDish():void{
   rating:res.data.rating,
   image: res.data.image,
   category: res.data.category,
+  switchOnFav:res.data.switchOnFav
       }) 
-      console.log(this.dish())
+      this.onloadCheckFav(this.dish())
     }),
         error:((err:any)=>{
         this.toastr.error(err.error.message)
@@ -62,4 +66,121 @@ getDish():void{
     })
   })
 }
+
+
+
+addTocart(Item:Irecommended):void{
+  this._Cartservices.addToCart(Item).subscribe({
+      next:((res:any)=> {
+        this._Cartservices.getCart().subscribe({
+          next:((res:ICartResponse)=>{
+          this._Cartservices.setDataCart(res.data,res.summary)
+          })
+        })
+        
+        this.toastr.success(res.message);
+      
+      }),
+    error:((err:any)=>(this.toastr.error(err.error.message)))
+  })
+}
+platformId = inject(PLATFORM_ID)
+ fav :number[] = []
+
+addFav(itemRecomanded:Irecommended):void{
+  this._favSrevices.addFav(itemRecomanded).subscribe({
+    next:((res:any)=> {
+      
+      this.toastr.success(res.message);
+      
+      this.saveInlocal(itemRecomanded,res.message)
+     
+
+    
+    
+    }),
+        error:((err:any)=>(this.toastr.error(err.error.message)))
+  })
+}
+
+
+
+
+saveInlocal(itemRecomanded:Irecommended ,message:string):void{
+     if(isPlatformBrowser(this.platformId)){
+   if( message === 'Added to favorites'){
+     this.fav.push(itemRecomanded.id)
+      localStorage.setItem('fav',JSON.stringify(this.fav))
+   if(itemRecomanded.id == this.dish().id){
+   this.dish.set({
+    id:itemRecomanded.id,
+  name: itemRecomanded.name,
+  description: itemRecomanded.description,
+  price: itemRecomanded.price,
+  kcal:itemRecomanded.kcal,
+  protein: itemRecomanded.protein,
+  reviews:itemRecomanded.reviews,
+  rating:itemRecomanded.rating,
+  image: itemRecomanded.image,
+  category: itemRecomanded.category,
+  switchOnFav:itemRecomanded.switchOnFav = true
+    }
+    )
+
+   }
+ 
+  
+
+   }
+   else if(message === 'Removed from favorites'){
+   if(itemRecomanded.id == this.dish().id){
+   this.dish.set({
+    id:itemRecomanded.id,
+  name: itemRecomanded.name,
+  description: itemRecomanded.description,
+  price: itemRecomanded.price,
+  kcal:itemRecomanded.kcal,
+  protein: itemRecomanded.protein,
+  reviews:itemRecomanded.reviews,
+  rating:itemRecomanded.rating,
+  image: itemRecomanded.image,
+  category: itemRecomanded.category,
+  switchOnFav:itemRecomanded.switchOnFav = false
+    }
+    )
+
+   }
+
+   this.fav = this.fav.filter((id:number) => id !== itemRecomanded.id  )
+      localStorage.setItem('fav',JSON.stringify(this.fav))
+   }
+}
+}
+
+
+
+onloadCheckFav(Recommended:Irecommended):void{
+  if(isPlatformBrowser(this.platformId)){
+  if(JSON.parse(localStorage.getItem('fav') || '[]') != null){
+    this.fav = JSON.parse(localStorage.getItem('fav') || '[]')
+  }
+    if( this.fav.some((id:number) => id === Recommended.id)){
+  return   this.dish.set({
+         id:Recommended.id,
+  name: Recommended.name,
+  description: Recommended.description,
+  price: Recommended.price,
+  kcal:Recommended.kcal,
+  protein: Recommended.protein,
+  reviews:Recommended.reviews,
+  rating:Recommended.rating,
+  image: Recommended.image,
+  category: Recommended.category,
+  switchOnFav:Recommended.switchOnFav = true
+     })
+   
+  }
+}
+}
+
 }

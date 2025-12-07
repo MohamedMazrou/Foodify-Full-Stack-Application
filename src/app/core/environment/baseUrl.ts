@@ -14,6 +14,7 @@ export const url = {
     endPoint_profile:'/api/me',
     endPoint_UpdateProfile:'/api/profile',
     endPoint_dishes:'/api/dishes/',
+    endPoint_payment_Method:'/api/payment-methods',
 
 
 } 
